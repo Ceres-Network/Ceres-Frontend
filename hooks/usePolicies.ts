@@ -1,7 +1,4 @@
-import useSWR from 'swr';
-import { useCeresClient } from './useCeresClient';
-import { useWallet } from '@/components/wallet/WalletProvider';
-
+// TODO: Implement policy data fetching
 export interface Policy {
   id: string;
   farmer: string;
@@ -26,36 +23,21 @@ interface UsePoliciesResult {
 }
 
 /**
- * Fetch and cache farmer policies with SWR
+ * Hook to fetch farmer policies
+ * TODO: Implement SWR data fetching
  */
 export function usePolicies(): UsePoliciesResult {
-  const client = useCeresClient();
-  const { address, isConnected } = useWallet();
-
-  const { data, error, isLoading, mutate } = useSWR<Policy[]>(
-    isConnected && address ? ['policies', address] : null,
-    async () => {
-      if (!address) return [];
-      return await client.listFarmerPolicies(address);
-    },
-    {
-      refreshInterval: 60000, // Refresh every 60 seconds
-      revalidateOnFocus: true,
-    }
-  );
-
   return {
-    policies: data,
-    isLoading,
-    error,
-    mutate: async () => {
-      await mutate();
-    },
+    policies: [],
+    isLoading: false,
+    error: undefined,
+    mutate: async () => {},
   };
 }
 
 /**
- * Fetch a single policy by ID
+ * Hook to fetch a single policy by ID
+ * TODO: Implement policy fetching
  */
 export function usePolicy(policyId: string | null): {
   policy: Policy | undefined;
@@ -63,26 +45,10 @@ export function usePolicy(policyId: string | null): {
   error: Error | undefined;
   mutate: () => Promise<void>;
 } {
-  const client = useCeresClient();
-
-  const { data, error, isLoading, mutate } = useSWR<Policy>(
-    policyId ? ['policy', policyId] : null,
-    async () => {
-      if (!policyId) throw new Error('Policy ID is required');
-      return await client.getPolicy(policyId);
-    },
-    {
-      refreshInterval: 60000,
-      revalidateOnFocus: true,
-    }
-  );
-
   return {
-    policy: data,
-    isLoading,
-    error,
-    mutate: async () => {
-      await mutate();
-    },
+    policy: undefined,
+    isLoading: false,
+    error: undefined,
+    mutate: async () => {},
   };
 }

@@ -1,7 +1,4 @@
-import useSWR from 'swr';
-import { useCeresClient } from './useCeresClient';
-import { useWallet } from '@/components/wallet/WalletProvider';
-
+// TODO: Implement pool statistics fetching
 export interface PoolStats {
   totalCapital: bigint;
   totalLocked: bigint;
@@ -23,34 +20,30 @@ interface UsePoolStatsResult {
 }
 
 /**
- * Fetch and cache pool statistics with 15-second polling
+ * Hook to fetch pool statistics
+ * TODO: Implement real data fetching
  */
 export function usePoolStats(): UsePoolStatsResult {
-  const client = useCeresClient();
-
-  const { data, error, isLoading, mutate } = useSWR<PoolStats>(
-    'pool-stats',
-    async () => {
-      return await client.getPoolStats();
-    },
-    {
-      refreshInterval: 15000, // Refresh every 15 seconds
-      revalidateOnFocus: true,
-    }
-  );
+  // Mock data for now
+  const mockStats: PoolStats = {
+    totalCapital: BigInt(0),
+    totalLocked: BigInt(0),
+    freeCapital: BigInt(0),
+    utilisation: 0,
+    totalShares: BigInt(0),
+  };
 
   return {
-    stats: data,
-    isLoading,
-    error,
-    mutate: async () => {
-      await mutate();
-    },
+    stats: mockStats,
+    isLoading: false,
+    error: undefined,
+    mutate: async () => {},
   };
 }
 
 /**
- * Fetch LP position for connected wallet
+ * Hook to fetch LP position
+ * TODO: Implement position fetching
  */
 export function useLPPosition(): {
   position: LPPosition | undefined;
@@ -58,27 +51,10 @@ export function useLPPosition(): {
   error: Error | undefined;
   mutate: () => Promise<void>;
 } {
-  const client = useCeresClient();
-  const { address, isConnected } = useWallet();
-
-  const { data, error, isLoading, mutate } = useSWR<LPPosition>(
-    isConnected && address ? ['lp-position', address] : null,
-    async () => {
-      if (!address) throw new Error('Wallet not connected');
-      return await client.getLPPosition(address);
-    },
-    {
-      refreshInterval: 15000,
-      revalidateOnFocus: true,
-    }
-  );
-
   return {
-    position: data,
-    isLoading,
-    error,
-    mutate: async () => {
-      await mutate();
-    },
+    position: undefined,
+    isLoading: false,
+    error: undefined,
+    mutate: async () => {},
   };
 }

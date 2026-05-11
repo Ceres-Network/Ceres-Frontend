@@ -1,6 +1,4 @@
-import useSWR from 'swr';
-import { useCeresClient } from './useCeresClient';
-
+// TODO: Implement oracle reading data fetching
 export type ReadingType = 'rainfall' | 'ndvi';
 
 export interface OracleReading {
@@ -28,34 +26,21 @@ interface UseOracleReadingsResult {
 }
 
 /**
- * Fetch oracle reading history
+ * Hook to fetch oracle reading history
+ * TODO: Implement data fetching
  */
 export function useOracleReadings(limit = 20): UseOracleReadingsResult {
-  const client = useCeresClient();
-
-  const { data, error, isLoading, mutate } = useSWR<OracleReading[]>(
-    ['oracle-readings', limit],
-    async () => {
-      return await client.getOracleReadings(limit);
-    },
-    {
-      refreshInterval: 30000, // Refresh every 30 seconds
-      revalidateOnFocus: true,
-    }
-  );
-
   return {
-    readings: data,
-    isLoading,
-    error,
-    mutate: async () => {
-      await mutate();
-    },
+    readings: [],
+    isLoading: false,
+    error: undefined,
+    mutate: async () => {},
   };
 }
 
 /**
- * Fetch aggregated readings for a specific geo-cell
+ * Hook to fetch aggregated readings for a geo-cell
+ * TODO: Implement aggregated readings
  */
 export function useAggregatedReadings(geohash: string | null): {
   readings: AggregatedReading | undefined;
@@ -63,32 +48,17 @@ export function useAggregatedReadings(geohash: string | null): {
   error: Error | undefined;
   mutate: () => Promise<void>;
 } {
-  const client = useCeresClient();
-
-  const { data, error, isLoading, mutate } = useSWR<AggregatedReading>(
-    geohash ? ['aggregated-readings', geohash] : null,
-    async () => {
-      if (!geohash) throw new Error('Geohash is required');
-      return await client.getAggregatedReadings(geohash);
-    },
-    {
-      refreshInterval: 30000,
-      revalidateOnFocus: true,
-    }
-  );
-
   return {
-    readings: data,
-    isLoading,
-    error,
-    mutate: async () => {
-      await mutate();
-    },
+    readings: undefined,
+    isLoading: false,
+    error: undefined,
+    mutate: async () => {},
   };
 }
 
 /**
- * Fetch node health stats for connected wallet
+ * Hook to fetch node health stats
+ * TODO: Implement node health tracking
  */
 export function useNodeHealth(address: string | null): {
   health: {
@@ -99,23 +69,9 @@ export function useNodeHealth(address: string | null): {
   isLoading: boolean;
   error: Error | undefined;
 } {
-  const client = useCeresClient();
-
-  const { data, error, isLoading } = useSWR(
-    address ? ['node-health', address] : null,
-    async () => {
-      if (!address) throw new Error('Address is required');
-      return await client.getNodeHealth(address);
-    },
-    {
-      refreshInterval: 60000,
-      revalidateOnFocus: true,
-    }
-  );
-
   return {
-    health: data,
-    isLoading,
-    error,
+    health: undefined,
+    isLoading: false,
+    error: undefined,
   };
 }

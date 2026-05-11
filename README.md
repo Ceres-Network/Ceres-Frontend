@@ -27,11 +27,17 @@ This is an **open-source project** under active development. We welcome contribu
 
 ### Current Status
 
-- ✅ Core UI components and pages
-- ✅ Wallet integration (Freighter)
-- ✅ Basic data fetching hooks
+- ✅ Project structure and basic setup
+- ✅ Core UI components (buttons, cards, forms)
+- ✅ Wallet integration (Freighter connection)
+- ✅ Page layouts and routing
+- 🚧 Policy registration (planned)
+- 🚧 Pool deposit/withdrawal (planned)
+- 🚧 Oracle reading submission (planned)
 - 🚧 Smart contract integration (in progress)
-- 🚧 Oracle data aggregation (in progress)
+- 🚧 Data fetching and state management (in progress)
+- 📋 Charts and visualizations (planned)
+- 📋 Form validation (planned)
 - 📋 End-to-end testing (planned)
 - 📋 Production deployment (planned)
 

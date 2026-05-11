@@ -5,16 +5,13 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { PolicyList } from '@/components/farmer/PolicyList';
 import { useWallet } from '@/components/wallet/WalletProvider';
-import { usePolicies } from '@/hooks/usePolicies';
-import { formatUSDC } from '@/lib/format';
-import { Plus, Shield, TrendingUp, DollarSign } from 'lucide-react';
+import { Plus, Shield } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export default function FarmerDashboardPage(): React.ReactElement {
   const router = useRouter();
   const { isConnected } = useWallet();
-  const { policies, isLoading } = usePolicies();
 
   useEffect(() => {
     if (!isConnected) {
@@ -26,15 +23,6 @@ export default function FarmerDashboardPage(): React.ReactElement {
     return <div className="container py-12">Redirecting...</div>;
   }
 
-  const activePolicies = policies?.filter((p) => p.status === 'active') || [];
-  const totalCoverage = policies?.reduce(
-    (sum, p) => sum + BigInt(p.coverageAmount),
-    BigInt(0)
-  ) || BigInt(0);
-  const totalPayouts = policies
-    ?.filter((p) => p.status === 'triggered')
-    .reduce((sum, p) => sum + BigInt(p.payoutAmount || 0), BigInt(0)) || BigInt(0);
-
   return (
     <div className="container py-12 space-y-8">
       <div className="flex items-center justify-between">
@@ -42,13 +30,20 @@ export default function FarmerDashboardPage(): React.ReactElement {
           <h1 className="text-4xl font-bold">Farmer Dashboard</h1>
           <p className="text-muted-foreground mt-2">Manage your crop insurance policies</p>
         </div>
-        <Button asChild size="lg">
-          <Link href="/farmer/register">
-            <Plus className="mr-2 h-4 w-4" />
-            Register New Policy
-          </Link>
+        <Button size="lg" disabled>
+          <Plus className="mr-2 h-4 w-4" />
+          Register New Policy
         </Button>
       </div>
+
+      <Alert>
+        <Shield className="h-4 w-4" />
+        <AlertTitle>Policy Management</AlertTitle>
+        <AlertDescription>
+          Policy registration and management features are currently under development. 
+          Connect your wallet to get started once available.
+        </AlertDescription>
+      </Alert>
 
       {/* Summary Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -60,7 +55,7 @@ export default function FarmerDashboardPage(): React.ReactElement {
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Active Policies</p>
-                <p className="text-2xl font-bold">{activePolicies.length}</p>
+                <p className="text-2xl font-bold">0</p>
               </div>
             </div>
           </CardContent>
@@ -70,11 +65,11 @@ export default function FarmerDashboardPage(): React.ReactElement {
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-secondary/20 rounded-lg">
-                <TrendingUp className="h-5 w-5 text-secondary-foreground" />
+                <Shield className="h-5 w-5 text-secondary-foreground" />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Total Coverage</p>
-                <p className="text-2xl font-bold">{formatUSDC(totalCoverage)}</p>
+                <p className="text-2xl font-bold">$0.00</p>
               </div>
             </div>
           </CardContent>
@@ -84,21 +79,27 @@ export default function FarmerDashboardPage(): React.ReactElement {
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-primary/20 rounded-lg">
-                <DollarSign className="h-5 w-5 text-primary" />
+                <Shield className="h-5 w-5 text-primary" />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Triggered Payouts</p>
-                <p className="text-2xl font-bold">{formatUSDC(totalPayouts)}</p>
+                <p className="text-2xl font-bold">$0.00</p>
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Policy List */}
+      {/* Policy List Placeholder */}
       <div>
         <h2 className="text-2xl font-semibold mb-4">Your Policies</h2>
-        <PolicyList policies={policies} isLoading={isLoading} />
+        <Card>
+          <CardContent className="py-12 text-center text-muted-foreground">
+            <Shield className="h-12 w-12 mx-auto mb-4 opacity-50" />
+            <p>No policies found</p>
+            <p className="text-sm mt-2">Register your first policy to get started</p>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

@@ -2,29 +2,20 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { ReadingSubmitForm } from '@/components/oracle/ReadingSubmitForm';
-import { ReadingHistoryTable } from '@/components/oracle/ReadingHistoryTable';
-import { NodeHealthCard } from '@/components/oracle/NodeHealthCard';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useWallet } from '@/components/wallet/WalletProvider';
-import { useOracleReadings, useNodeHealth } from '@/hooks/useOracleReadings';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Info } from 'lucide-react';
+import { CloudRain } from 'lucide-react';
 
 export default function OracleDashboardPage(): React.ReactElement {
   const router = useRouter();
-  const { isConnected, address } = useWallet();
-  const { readings, isLoading, mutate } = useOracleReadings(20);
-  const { health, isLoading: healthLoading } = useNodeHealth(address);
+  const { isConnected } = useWallet();
 
   useEffect(() => {
     if (!isConnected) {
       router.push('/');
     }
   }, [isConnected, router]);
-
-  const handleSuccess = async (): Promise<void> => {
-    await mutate();
-  };
 
   if (!isConnected) {
     return <div className="container py-12">Redirecting...</div>;
@@ -40,26 +31,51 @@ export default function OracleDashboardPage(): React.ReactElement {
       </div>
 
       <Alert>
-        <Info className="h-4 w-4" />
+        <CloudRain className="h-4 w-4" />
         <AlertTitle>Oracle Node Information</AlertTitle>
         <AlertDescription>
           Oracle operators submit weather readings (rainfall) and vegetation health data (NDVI) for
-          specific geographic cells. Readings must be recent and accurate to be accepted by the
-          protocol.
+          specific geographic cells. This functionality is currently under development.
         </AlertDescription>
       </Alert>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <ReadingSubmitForm onSuccess={handleSuccess} />
-        </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Submit Reading</CardTitle>
+            <CardDescription>Submit weather or vegetation data for a geo-cell</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground text-center py-8">
+              Reading submission coming soon
+            </p>
+          </CardContent>
+        </Card>
 
-        <div>
-          <NodeHealthCard health={health} isLoading={healthLoading} />
-        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Node Health</CardTitle>
+            <CardDescription>Your oracle node statistics</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground text-center py-8">
+              Node health tracking coming soon
+            </p>
+          </CardContent>
+        </Card>
       </div>
 
-      <ReadingHistoryTable readings={readings} isLoading={isLoading} />
+      <Card>
+        <CardHeader>
+          <CardTitle>Reading History</CardTitle>
+          <CardDescription>Recent submissions from all oracle nodes</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground text-center py-8">
+            No readings available
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 }

@@ -1,13 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import { isConnected, getPublicKey, getNetwork } from '@stellar/freighter-api';
-import { STELLAR_NETWORK } from '@/lib/constants';
+import { isConnected, getPublicKey } from '@stellar/freighter-api';
 
 export interface WalletContextValue {
   address: string | null;
   isConnected: boolean;
-  isCorrectNetwork: boolean;
   connect: () => Promise<void>;
   disconnect: () => void;
   isLoading: boolean;
@@ -17,7 +15,6 @@ const WalletContext = React.createContext<WalletContextValue | undefined>(undefi
 
 export function WalletProvider({ children }: { children: React.ReactNode }): React.ReactElement {
   const [address, setAddress] = React.useState<string | null>(null);
-  const [isCorrectNetwork, setIsCorrectNetwork] = React.useState(true);
   const [isLoading, setIsLoading] = React.useState(true);
 
   const checkConnection = React.useCallback(async () => {
@@ -25,9 +22,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }): Rea
       const connected = await isConnected();
       if (connected) {
         const publicKey = await getPublicKey();
-        const network = await getNetwork();
         setAddress(publicKey);
-        setIsCorrectNetwork(network === STELLAR_NETWORK);
       } else {
         setAddress(null);
       }
@@ -47,9 +42,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }): Rea
     try {
       setIsLoading(true);
       const publicKey = await getPublicKey();
-      const network = await getNetwork();
       setAddress(publicKey);
-      setIsCorrectNetwork(network === STELLAR_NETWORK);
     } catch (error) {
       console.error('Failed to connect wallet:', error);
       throw error;
@@ -60,19 +53,17 @@ export function WalletProvider({ children }: { children: React.ReactNode }): Rea
 
   const disconnect = React.useCallback(() => {
     setAddress(null);
-    setIsCorrectNetwork(true);
   }, []);
 
   const value = React.useMemo(
     () => ({
       address,
       isConnected: !!address,
-      isCorrectNetwork,
       connect,
       disconnect,
       isLoading,
     }),
-    [address, isCorrectNetwork, connect, disconnect, isLoading]
+    [address, connect, disconnect, isLoading]
   );
 
   return <WalletContext.Provider value={value}>{children}</WalletContext.Provider>;

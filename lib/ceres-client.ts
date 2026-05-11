@@ -5,16 +5,12 @@ let ceresClientInstance: CeresClient | null = null;
 
 /**
  * Get singleton CeresClient instance
+ * TODO: Implement full client initialization
  */
 export function getCeresClient(): CeresClient {
   if (!ceresClientInstance) {
-    ceresClientInstance = new CeresClient({
-      network: STELLAR_NETWORK,
-      poolContract: CONTRACT_ADDRESSES.pool,
-      policyContract: CONTRACT_ADDRESSES.policy,
-      oracleContract: CONTRACT_ADDRESSES.oracle,
-      triggerContract: CONTRACT_ADDRESSES.trigger,
-    });
+    // TODO: Initialize CeresClient with proper configuration
+    throw new Error('CeresClient not yet implemented');
   }
   return ceresClientInstance;
 }
