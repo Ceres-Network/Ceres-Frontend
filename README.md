@@ -17,7 +17,27 @@ Ceres Network provides parametric crop insurance powered by smart contracts on S
 - **Liquidity Providers** — Deposit/withdraw USDC into the shared pool and track LP share value
 - **Oracle Operators** — Submit weather readings and vegetation health data for geo-cells
 
-The frontend communicates with deployed Soroban contracts via the CeresClient TypeScript SDK and supports Freighter wallet for transaction signing.
+## Architecture
+
+Ceres Network uses a **hybrid architecture** combining on-chain smart contracts with off-chain services:
+
+### Smart Contracts (On-Chain)
+- Pool, Policy, Oracle, and Trigger contracts deployed on Soroban
+- Source of truth for all state and business logic
+- Users sign transactions directly via Freighter wallet
+
+### Backend API (Off-Chain)
+- **Event Indexer** — Indexes contract events to PostgreSQL for fast historical queries
+- **Oracle Feeder** — Automated weather data submission from CHIRPS, NASA POWER, and Open-Meteo
+- **REST API** — Serves indexed data and proxies weather lookups with protected API keys
+- Repository: [ceres-backend](https://github.com/Ceres-Network/Ceres-backend)
+
+### Frontend (This Repository)
+- **Reads** from backend API for historical data (policies, events, statistics)
+- **Writes** directly to smart contracts via CeresClient SDK (user-signed transactions)
+- Supports Freighter wallet for transaction signing
+
+📖 **For detailed architecture documentation, see [ARCHITECTURE.md](ARCHITECTURE.md)**
 
 ## 🚧 Project Status
 
@@ -79,19 +99,29 @@ npm install
 cp .env.example .env.local
 ```
 
-Edit `.env.local` and add your contract addresses:
+Edit `.env.local` and add your configuration:
 
 ```env
+# Stellar Network Configuration
 NEXT_PUBLIC_STELLAR_NETWORK=testnet
 NEXT_PUBLIC_HORIZON_URL=https://horizon-testnet.stellar.org
 NEXT_PUBLIC_SOROBAN_RPC_URL=https://soroban-testnet.stellar.org
+
+# Smart Contract Addresses
 NEXT_PUBLIC_POOL_CONTRACT=C...
 NEXT_PUBLIC_POLICY_CONTRACT=C...
 NEXT_PUBLIC_ORACLE_CONTRACT=C...
 NEXT_PUBLIC_TRIGGER_CONTRACT=C...
+
+# USDC Asset Configuration
 NEXT_PUBLIC_USDC_ASSET_CODE=USDC
 NEXT_PUBLIC_USDC_ISSUER=G...
+
+# Backend API (required for data fetching)
+NEXT_PUBLIC_API_URL=https://api.ceres.network
 ```
+
+> **Note:** The backend API is required for the frontend to function properly. See [ceres-backend](https://github.com/Ceres-Network/Ceres-backend) for setup instructions.
 
 4. **Run development server**
 
@@ -101,13 +131,17 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Connecting to Local Contracts
+## Local Development Setup
 
-To connect to locally deployed contracts:
+To run the full stack locally:
 
-1. Deploy contracts using the [Ceres-contracts](https://github.com/Ceres-Network/Ceres-contracts) repository
-2. Update `.env.local` with your local contract addresses
-3. Point `NEXT_PUBLIC_SOROBAN_RPC_URL` to your local Soroban RPC endpoint
+1. **Deploy smart contracts** using the [ceres-contracts](https://github.com/Ceres-Network/Ceres-contracts) repository
+2. **Run the backend** using the [ceres-backend](https://github.com/Ceres-Network/Ceres-backend) repository
+3. **Update `.env.local`** with your local configuration:
+   - Contract addresses from step 1
+   - `NEXT_PUBLIC_API_URL=http://localhost:3001` (or your backend port)
+   - `NEXT_PUBLIC_SOROBAN_RPC_URL` pointing to your local Soroban RPC endpoint
+4. **Start the frontend** with `npm run dev`
 
 ## Project Structure
 
@@ -197,7 +231,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 ## Related Repositories
 
-- [ceres-contracts](https://github.com/Ceres-Network/Ceres-contracts) — Soroban smart contracts
+- [ceres-contracts](https://github.com/Ceres-Network/Ceres-contracts) — Soroban smart contracts (Pool, Policy, Oracle, Trigger)
+- [ceres-backend](https://github.com/Ceres-Network/Ceres-backend) — Event indexer, oracle feeder, and REST API
 
 ## 📄 License
 

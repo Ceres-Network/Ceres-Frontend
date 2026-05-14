@@ -111,6 +111,7 @@ We actively welcome your pull requests! Here's how:
 - **npm or yarn** — Comes with Node.js
 - **Git** — [Download](https://git-scm.com/)
 - **Freighter Wallet** — [Install](https://www.freighter.app/)
+- **Backend API** — See [ceres-backend](https://github.com/Ceres-Network/Ceres-backend) setup
 
 ### Setup Steps
 
@@ -129,15 +130,25 @@ We actively welcome your pull requests! Here's how:
    ```bash
    cp .env.example .env.local
    # Edit .env.local with your configuration
+   # Important: Set NEXT_PUBLIC_API_URL to your backend API endpoint
    ```
 
-4. **Start the development server**
+4. **Ensure backend is running**
+   The frontend requires the [ceres-backend](https://github.com/Ceres-Network/Ceres-backend) API to be running.
+   See the backend repository for setup instructions.
+
+5. **Start the development server**
    ```bash
    npm run dev
    ```
 
 5. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
+
+> **Note:** Many features require the backend API to be running. If you see empty data or errors, verify that:
+> - The backend is running and accessible
+> - `NEXT_PUBLIC_API_URL` in `.env.local` points to the correct backend endpoint
+> - Smart contracts are deployed and addresses are configured
 
 ### Available Scripts
 

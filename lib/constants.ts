@@ -1,6 +1,7 @@
 export const STELLAR_NETWORK = process.env.NEXT_PUBLIC_STELLAR_NETWORK as 'testnet' | 'mainnet';
 export const HORIZON_URL = process.env.NEXT_PUBLIC_HORIZON_URL!;
 export const SOROBAN_RPC_URL = process.env.NEXT_PUBLIC_SOROBAN_RPC_URL!;
+export const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
 export const CONTRACT_ADDRESSES = {
   pool: process.env.NEXT_PUBLIC_POOL_CONTRACT!,
