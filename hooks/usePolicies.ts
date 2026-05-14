@@ -39,7 +39,7 @@ export function usePolicies(): UsePoliciesResult {
  * Hook to fetch a single policy by ID
  * TODO: Implement policy fetching
  */
-export function usePolicy(policyId: string | null): {
+export function usePolicy(_policyId: string | null): {
   policy: Policy | undefined;
   isLoading: boolean;
   error: Error | undefined;

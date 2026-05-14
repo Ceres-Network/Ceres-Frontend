@@ -1,5 +1,5 @@
 import { getCeresClient } from '@/lib/ceres-client';
-import type { CeresClient } from '@ceres-network/sdk';
+import type { CeresClient } from '@/lib/sdk-mock';
 
 /**
  * Hook to access the singleton CeresClient instance

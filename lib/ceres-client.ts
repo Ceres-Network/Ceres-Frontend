@@ -1,4 +1,4 @@
-import { CeresClient } from '@ceres-network/sdk';
+import type { CeresClient } from './sdk-mock';
 import { CONTRACT_ADDRESSES, STELLAR_NETWORK } from './constants';
 
 let ceresClientInstance: CeresClient | null = null;
@@ -21,3 +21,7 @@ export function getCeresClient(): CeresClient {
 export function resetCeresClient(): void {
   ceresClientInstance = null;
 }
+
+// Suppress unused variable warnings - these will be used when SDK is implemented
+void CONTRACT_ADDRESSES;
+void STELLAR_NETWORK;

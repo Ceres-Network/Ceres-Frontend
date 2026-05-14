@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PolicyStatusBadge } from './PolicyStatusBadge';
-import { formatUSDC, formatTimestamp } from '@/lib/format';
+import { formatUSDC } from '@/lib/format';
 import type { Policy } from '@/hooks/usePolicies';
 import { MapPin } from 'lucide-react';
 

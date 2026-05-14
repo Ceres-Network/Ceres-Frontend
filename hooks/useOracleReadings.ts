@@ -29,7 +29,7 @@ interface UseOracleReadingsResult {
  * Hook to fetch oracle reading history
  * TODO: Implement data fetching
  */
-export function useOracleReadings(limit = 20): UseOracleReadingsResult {
+export function useOracleReadings(_limit = 20): UseOracleReadingsResult {
   return {
     readings: [],
     isLoading: false,
@@ -42,7 +42,7 @@ export function useOracleReadings(limit = 20): UseOracleReadingsResult {
  * Hook to fetch aggregated readings for a geo-cell
  * TODO: Implement aggregated readings
  */
-export function useAggregatedReadings(geohash: string | null): {
+export function useAggregatedReadings(_geohash: string | null): {
   readings: AggregatedReading | undefined;
   isLoading: boolean;
   error: Error | undefined;
@@ -60,7 +60,7 @@ export function useAggregatedReadings(geohash: string | null): {
  * Hook to fetch node health stats
  * TODO: Implement node health tracking
  */
-export function useNodeHealth(address: string | null): {
+export function useNodeHealth(_address: string | null): {
   health: {
     submissionsLast24h: number;
     trackedCells: string[];

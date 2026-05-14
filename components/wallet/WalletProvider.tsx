@@ -6,6 +6,7 @@ import { isConnected, getPublicKey } from '@stellar/freighter-api';
 export interface WalletContextValue {
   address: string | null;
   isConnected: boolean;
+  isCorrectNetwork: boolean;
   connect: () => Promise<void>;
   disconnect: () => void;
   isLoading: boolean;
@@ -59,6 +60,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }): Rea
     () => ({
       address,
       isConnected: !!address,
+      isCorrectNetwork: true, // TODO: Implement network checking
       connect,
       disconnect,
       isLoading,
