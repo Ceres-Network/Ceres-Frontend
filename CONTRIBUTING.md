@@ -116,7 +116,7 @@ We actively welcome your pull requests! Here's how:
 
 1. **Fork and clone the repository**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/ceres-app.git
+   git clone https://github.com/YOUR_USERNAME/Ceres-Frontend.git
    cd ceres-app
    ```
 
@@ -357,8 +357,6 @@ When making changes, update:
 
 - **GitHub Issues** — Bug reports and feature requests
 - **GitHub Discussions** — General questions and ideas
-- **Discord** — Real-time chat (coming soon)
-- **Twitter** — [@CeresNetwork](https://twitter.com/CeresNetwork) (coming soon)
 
 ### Getting Help
 
@@ -386,4 +384,4 @@ Your contributions make Ceres Network better for farmers worldwide. Whether it's
 
 **Questions?** Open an issue or discussion, and we'll be happy to help!
 
-**Ready to contribute?** Check out our [good first issues](https://github.com/ceres-network/ceres-app/labels/good%20first%20issue)!
+**Ready to contribute?** Check out our [good first issues](https://github.com/Ceres-Network/Ceres-Frontend/labels/good%20first%20issue)!

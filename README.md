@@ -1,10 +1,8 @@
-# Ceres Network dApp
+# Ceres Network Frontend
 
 > ⚠️ **Work in Progress**: This project is under active development. Features may be incomplete or subject to change.
 
 The React/Next.js frontend for the Ceres Network decentralised parametric crop insurance protocol on Stellar/Soroban.
-
-![Ceres Network](./public/images/hero-placeholder.png)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -41,7 +39,7 @@ This is an **open-source project** under active development. We welcome contribu
 - 📋 End-to-end testing (planned)
 - 📋 Production deployment (planned)
 
-See our [GitHub Issues](https://github.com/ceres-network/ceres-app/issues) for detailed progress and roadmap.
+See our [GitHub Issues](https://github.com/ceres-network/Ceres-Frontend/issues) for detailed progress and roadmap.
 
 ## Features
 
@@ -65,8 +63,8 @@ _Coming soon_
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/ceres-network/ceres-app.git
-cd ceres-app
+git clone https://github.com/Ceres-Network/Ceres-Frontend.git
+cd Ceres-Frontend
 ```
 
 2. **Install dependencies**
@@ -107,14 +105,14 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 To connect to locally deployed contracts:
 
-1. Deploy contracts using the [ceres-contracts](https://github.com/ceres-network/ceres-contracts) repository
+1. Deploy contracts using the [Ceres-contracts](https://github.com/Ceres-Network/Ceres-contracts) repository
 2. Update `.env.local` with your local contract addresses
 3. Point `NEXT_PUBLIC_SOROBAN_RPC_URL` to your local Soroban RPC endpoint
 
 ## Project Structure
 
 ```
-ceres-app/
+Ceres-Frontend/
 ├── app/                    # Next.js 14 App Router pages
 │   ├── farmer/            # Farmer dashboard and policy pages
 │   ├── pool/              # LP pool dashboard
@@ -199,8 +197,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 ## Related Repositories
 
-- [ceres-contracts](https://github.com/ceres-network/ceres-contracts) — Soroban smart contracts
-- [ceres-sdk](https://github.com/ceres-network/ceres-sdk) — TypeScript SDK for contract interaction
+- [ceres-contracts](https://github.com/Ceres-Network/Ceres-contracts) — Soroban smart contracts
 
 ## 📄 License
 
@@ -218,11 +215,8 @@ Want to be listed here? Check out our [Contributing Guide](CONTRIBUTING.md)!
 
 ## 💬 Community & Support
 
-- **GitHub Issues**: [Report bugs or request features](https://github.com/ceres-network/ceres-app/issues)
-- **GitHub Discussions**: [Ask questions and share ideas](https://github.com/ceres-network/ceres-app/discussions)
-- **Documentation**: [docs.ceres.network](https://docs.ceres.network) (coming soon)
-- **Discord**: [Join our community](https://discord.gg/ceres) (coming soon)
-- **Twitter**: [@CeresNetwork](https://twitter.com/CeresNetwork) (coming soon)
+- **GitHub Issues**: [Report bugs or request features](https://github.com/Ceres-Network/Ceres-Frontend/issues)
+- **GitHub Discussions**: [Ask questions and share ideas](https://github.com/Ceres-Network/Ceres-Frontend/discussions)
 
 ## 🙏 Acknowledgments
 
